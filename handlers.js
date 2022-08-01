@@ -46,10 +46,12 @@ const signinHandler = (req, res) => {
     const session = new Session(username, expiresAt)
     // add the session information to the sessions map
     sessions[sessionToken] = session
-
+    console.log("lkklk")
     // In the response, set a cookie on the client with the name "session_cookie"
     // and the value as the UUID we generated. We also set the expiry time
-    res.cookie("session_token", sessionToken, { expires: expiresAt })
+    res.cookie("session_token", sessionToken, { expires: expiresAt });
+    
+    res.send({status:true, msg:"success"});
     res.end()
 }
 
@@ -88,6 +90,7 @@ const welcomeHandler = (req, res) => {
     // If all checks have passed, we can consider the user authenticated and
     // send a welcome message
     res.send(`Welcome  ${userSession.username}!`).end()
+    res.send({status:true, msg:"success"});
 }
 
 const refreshHandler = (req, res) => {
@@ -130,6 +133,8 @@ const refreshHandler = (req, res) => {
     // set the session token to the new value we generated, with a
     // renewed expiration time
     res.cookie("session_token", newSessionToken, { expires: expiresAt })
+
+    res.send({status:true, msg:"success"});
     res.end()
 }
 
@@ -148,6 +153,8 @@ const logoutHandler = (req, res) => {
     delete sessions[sessionToken]
 
     res.cookie("session_token", "", { expires: new Date() })
+
+    res.send({status:true, msg:"success"});
     res.end()
 }
 
